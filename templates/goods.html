@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h5>商品管理</h5><hr>
+<div class="card p-3 mb-3">
+<form method="post" action="/goods/add" class="row g-2">
+<div class="col-md-2">
+<select class="form-select" name="cate_id">
+{% for c in cates %}<option value="{{c.id}}">{{c.name}}</option>{% endfor %}
+</select>
+</div>
+<div class="col-md-2"><input class="form-control" name="name" placeholder="商品名"></div>
+<div class="col-md-1"><input class="form-control" name="unit" placeholder="单位"></div>
+<div class="col-md-1"><input class="form-control" name="price" placeholder="成本价"></div>
+<div class="col-md-1"><input class="form-control" name="warn_stock" placeholder="预警"></div>
+<div class="col-md-3"><input class="form-control" name="remark" placeholder="备注"></div>
+<div class="col-md-2"><button class="btn btn-primary">添加</button></div>
+</form>
+</div>
+<table class="table table-sm">
+<tr><th>分类</th><th>商品</th><th>单位</th><th>成本</th><th>预警</th><th>操作</th></tr>
+{% for g in goods %}
+<tr>
+<td>{{g.category.name}}</td>
+<td>{{g.name}}</td>
+<td>{{g.unit}}</td>
+<td>{{g.price}}</td>
+<td>{{g.warn_stock}}</td>
+<td><a href="/goods/del/{{g.id}}" class="btn btn-sm btn-danger">删</a></td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

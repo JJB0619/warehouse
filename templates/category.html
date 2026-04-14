@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h5>商品分类</h5><hr>
+<div class="card p-3 mb-3">
+<form method="post" action="/category/add" class="row g-2">
+<div class="col-md-5"><input class="form-control" name="name" placeholder="分类名"></div>
+<div class="col-md-5"><input class="form-control" name="remark" placeholder="备注"></div>
+<div class="col-md-2"><button class="btn btn-primary">添加</button></div>
+</form>
+</div>
+<table class="table">
+<tr><th>分类</th><th>备注</th><th>操作</th></tr>
+{% for c in cates %}
+<tr><td>{{c.name}}</td><td>{{c.remark}}</td>
+<td><a href="/category/del/{{c.id}}" class="btn btn-sm btn-danger">删</a></td></tr>
+{% endfor %}
+</table>
+{% endblock %}

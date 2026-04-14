@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h5>成本利润</h5>
+<a href="/export/cost" class="btn btn-success btn-sm mb-2">导出Excel</a><hr>
+<div class="row g-3 mb-3">
+<div class="col-md-4"><div class="card p-3">总成本<br><h4>{{total_cost}}</h4></div></div>
+<div class="col-md-4"><div class="card p-3">总销售额<br><h4>{{total_sale}}</h4></div></div>
+<div class="col-md-4"><div class="card p-3">总利润<br><h4>{{total_profit}}</h4></div></div>
+</div>
+<table class="table table-sm">
+<tr><th>商品</th><th>成本</th><th>销售额</th><th>利润</th></tr>
+{% for item in list %}
+<tr>
+<td>{{item.goods}}</td>
+<td>{{item.cost}}</td>
+<td>{{item.sale}}</td>
+<td>{{item.profit}}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
