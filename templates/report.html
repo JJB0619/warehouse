@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>报表导出</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <div class="sidebar">
+      <div class="sidebar-title">菜单</div>
+      <div class="sidebar-menu">
+        <a href="/index">控制台</a>
+        <a href="/products">商品管理</a>
+        <a href="/stock">出入库管理</a>
+        <a href="/transfer">仓库调拨</a>
+        <a href="/warning">库存预警</a>
+        <a href="/report" class="active">报表导出</a>
+        <a href="/users">用户管理</a>
+        <a href="javascript:logout()">退出</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="page-title">Excel 报表导出</div>
+      <div class="card">
+        <button class="btn-primary" onclick="exportReport()">导出全部报表</button>
+      </div>
+    </div>
+  </div>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>用户管理</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="layout">
+    <div class="sidebar">
+      <div class="sidebar-title">菜单</div>
+      <div class="sidebar-menu">
+        <a href="/index">控制台</a>
+        <a href="/products">商品管理</a>
+        <a href="/stock">出入库管理</a>
+        <a href="/transfer">仓库调拨</a>
+        <a href="/warning">库存预警</a>
+        <a href="/report">报表导出</a>
+        <a href="/users" class="active">用户管理</a>
+        <a href="javascript:logout()">退出</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="page-title">用户管理（添加子管理员）</div>
+      <div class="form-row">
+        <input id="new_username" placeholder="用户名">
+        <input id="new_password" type="password" placeholder="密码">
+        <select id="is_admin">
+          <option value="false">普通用户</option>
+          <option value="true">子管理员</option>
+        </select>
+        <button class="btn-primary" onclick="addUser()">添加用户</button>
+      </div>
+      <table class="table" id="userTable"></table>
+    </div>
+  </div>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
