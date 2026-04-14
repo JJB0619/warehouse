@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h5>库存查询</h5>
+<a href="/export/stock" class="btn btn-success btn-sm mb-2">导出Excel</a><hr>
+<table class="table table-sm">
+<tr><th>分类</th><th>商品</th><th>单位</th><th>库存</th><th>状态</th></tr>
+{% for item in list %}
+<tr class="{% if item.warn %}bg-warning{% endif %}">
+<td>{{item.cate}}</td>
+<td>{{item.name}}</td>
+<td>{{item.unit}}</td>
+<td>{{item.total}}</td>
+<td>{% if item.warn %}<span class="badge bg-danger">预警</span>{% else %}正常{% endif %}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
