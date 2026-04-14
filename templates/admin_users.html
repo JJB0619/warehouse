@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>账号管理</title>
+</head>
+<body>
+    <h1>账号管理（仅主管理员可见）</h1>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for msg in messages %}
+          <p style="color:red">{{ msg }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h3>添加子管理员</h3>
+    <form action="/admin/user/add" method="post">
+        <input type="text" name="username" placeholder="用户名" required><br>
+        <input type="password" name="password" placeholder="密码" required><br>
+        <input type="hidden" name="role" value="sub_admin">
+        <button type="submit">添加子管理员</button>
+    </form>
+
+    <h3>账号列表</h3>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>角色</th>
+            <th>操作</th>
+        </tr>
+        {% for u in users %}
+        <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.username }}</td>
+            <td>{{ u.role }}</td>
+            <td>
+                {% if u.role != 'admin' %}
+                <a href="/admin/user/delete/{{ u.id }}" onclick="return confirm('确定删除？')">删除</a>
+                {% else %}
+                主账号
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+<br><a href="/">返回首页</a>
+</body>
+</html>
