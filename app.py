@@ -30,7 +30,7 @@ with app.app_context():
     db.create_all()
     init_system()
 
-# Railway生产环境入口（自动获取端口，兼容本地调试）
+# Railway生产环境入口
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
