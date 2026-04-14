@@ -1,6 +1,0 @@
-Flask==3.0.3
-flask-sqlalchemy==3.1.1
-werkzeug==3.0.4
-gunicorn==21.2.0
-pandas==2.2.3 --only-binary :all:
-openpyxl==3.1.5
