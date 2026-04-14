@@ -3,11 +3,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-类Config：
+class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', os.urandom(24).hex())
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///catering.db')
     
-    如果SQLALCHEMY_DATABASE_URI.以“postgres://”开头:
+    if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
         SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql+psycopg2://", 1)
     
     SQLALCHEMY_ENGINE_OPTIONS = {
@@ -16,4 +16,4 @@ load_dotenv()
     }
     
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-股票预警阈值 =10
+    STOCK_WARNING_THRESHOLD = 10
