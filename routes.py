@@ -36,8 +36,13 @@ def logout():
     logout_user()
     return jsonify({'code': 200, 'msg': '退出成功'})
 
-# 系统状态检查
+# 根路径自动跳转到登录页
 @bp.route('/')
+def index_redirect():
+    return redirect(url_for('routes.login_page'))
+
+# 系统状态检查（保留API接口）
+@bp.route('/api/health')
 def health_check():
     return jsonify({'code': 200, 'msg': '餐饮仓库管理系统运行正常'})
 
