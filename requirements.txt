@@ -1,0 +1,15 @@
+setuptools>=75.0.0
+wheel>=0.45.1
+pip>=25.0.1
+
+pandas==2.2.3 --only-binary :all:
+
+Flask==3.0.3
+Werkzeug==3.0.4
+Jinja2==3.1.4
+
+openpyxl==3.1.5
+xlrd==2.0.1
+
+requests==2.32.3
+python-dotenv==1.0.1
