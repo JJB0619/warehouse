@@ -1,37 +1,50 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <title>商品管理</title>
-  <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-  <div class="layout">
-    <div class="sidebar">
-      <div class="sidebar-title">菜单</div>
-      <div class="sidebar-menu">
-        <a href="/index">控制台</a>
-        <a href="/products" class="active">商品管理</a>
-        <a href="/stock">出入库管理</a>
-        <a href="/transfer">仓库调拨</a>
-        <a href="/warning">库存预警</a>
-        <a href="/report">报表导出</a>
-        <a href="/users">用户管理</a>
-        <a href="javascript:logout()">退出</a>
-      </div>
-    </div>
-
-    <div class="content">
-      <div class="page-title">商品管理</div>
-      <div class="form-row">
-        <input id="pname" placeholder="商品名称">
-        <input id="pspec" placeholder="规格">
-        <select id="warehouse_id"></select>
-        <button class="btn-primary" onclick="addProduct()">添加商品</button>
-      </div>
-      <table class="table" id="productTable"></table>
+<meta charset="UTF-8">
+<title>商品管理</title>
+<link rel="stylesheet" href="/static/css/style.css">
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-title">菜单</div>
+    <div class="sidebar-menu">
+      <a href="/index">控制台</a>
+      <a href="/products" class="active">商品管理</a>
+      <a href="/stock">出入库</a>
+      <a href="/transfer">调拨</a>
+      <a href="/warning">预警</a>
+      <a href="/report">报表</a>
+      <a href="/users">用户管理</a>
+      <a onclick="logout()">退出</a>
     </div>
   </div>
-  <script src="/static/js/main.js"></script>
-</body>
-</html>
+  <div class="content">
+    <div class="page-title">商品管理</div>
+    <div class="form-row">
+      <select id="filter_category" onchange="filterProducts()"><option value="">全部分类</option></select>
+      <button class="btn-primary" onclick="loadProductTable()">重置</button>
+    </div>
+    <div class="card">
+      <div class="card-title">添加商品</div>
+      <div class="form-row">
+        <input id="pname" placeholder="商品名">
+        <input id="pspec" placeholder="规格">
+        <select id="category_id"></select>
+        <select id="warehouse_id"></select>
+        <input id="pprice" type="number" step="0.01" placeholder="单价">
+        <input id="pnote" placeholder="备注">
+        <button class="btn-primary" onclick="addProduct()">添加</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">分类管理</div>
+      <div class="form-row">
+        <input id="new_cat_name" placeholder="分类名称">
+        <button class="btn-primary" onclick="addCategory()">添加分类</button>
+      </div>
+    </div>
+    <table class="table" id="productTable">
+      <tr><th>ID</th><th>名称</th><th>规格</th><th>分类</th><th>仓库</th><th>库存</th><th>单价</th><th>总价</th><th>备注</th></tr>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<script src="/static/js/main.js"></script>
