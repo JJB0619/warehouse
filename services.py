@@ -1,4 +1,4 @@
-from models import db, User, Warehouse, Product, StockIn, StockOut, Transfer
+from models import db, User, Warehouse, Product, StockIn, StockOut, Transfer, Category
 from flask_login import current_user
 from openpyxl import Workbook
 from datetime import datetime
@@ -9,6 +9,11 @@ def init_system():
     for name in warehouses:
         if not Warehouse.query.filter_by(name=name).first():
             db.session.add(Warehouse(name=name))
+
+    default_cats = ['食材', '调料', '酒水', '耗材']
+    for name in default_cats:
+        if not Category.query.filter_by(name=name).first():
+            db.session.add(Category(name=name))
 
     if not User.query.filter_by(username='admin').first():
         admin = User(username='admin', is_admin=True)
@@ -55,23 +60,20 @@ def transfer_op(pid, from_wid, to_wid, qty, operator):
     fp = Product.query.filter_by(id=pid, warehouse_id=from_wid).first()
     if not fp or fp.stock < qty:
         return False
-
     fp.stock -= qty
 
     tp = Product.query.filter_by(name=fp.name, warehouse_id=to_wid).first()
     if tp:
         tp.stock += qty
     else:
-        newp = Product(name=fp.name, spec=fp.spec, stock=qty, warehouse_id=to_wid)
+        newp = Product(
+            name=fp.name, spec=fp.spec, stock=qty,
+            price=fp.price, note=fp.note, category_id=fp.category_id,
+            warehouse_id=to_wid
+        )
         db.session.add(newp)
 
-    tr = Transfer(
-        product_id=pid,
-        from_warehouse_id=from_wid,
-        to_warehouse_id=to_wid,
-        quantity=qty,
-        operator=operator
-    )
+    tr = Transfer(product_id=pid, from_warehouse_id=from_wid, to_warehouse_id=to_wid, quantity=qty, operator=operator)
     db.session.add(tr)
     db.session.commit()
     return True
@@ -80,11 +82,17 @@ def export_all_reports():
     wb = Workbook()
     ws = wb.active
     ws.title = "库存"
-    ws.append(["ID","商品","规格","仓库","库存","时间"])
+    ws.append(["ID","商品","规格","分类","仓库","库存","单价","总价","备注","时间"])
 
     for p in Product.query.all():
         wh = Warehouse.query.get(p.warehouse_id)
-        ws.append([p.id, p.name, p.spec, wh.name if wh else "未知", p.stock, p.create_time])
+        cat = Category.query.get(p.category_id) if p.category_id else None
+        ws.append([
+            p.id, p.name, p.spec,
+            cat.name if cat else "无分类",
+            wh.name if wh else "未知",
+            p.stock, p.price, p.total_price, p.note, p.create_time
+        ])
 
     ws2 = wb.create_sheet("入库")
     ws2.append(["ID","商品","仓库","数量","操作人","时间"])
